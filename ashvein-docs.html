@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASHVEIN // codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Cinzel:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#0a0710;--void-2:#120b1d;--steel:#1c1430;
+  --ash:#8b7ba8;--ash-dim:#5a4d73;--frost:#c9bce0;
+  --violet:#7b4dff;--violet-glow:#9d7bff;--magenta:#ff3d9a;--magenta-glow:#ff6fb5;--ember:#d94fff;
+  --line:rgba(123,77,255,0.22);--line-soft:rgba(123,77,255,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--frost);font-family:'JetBrains Mono',monospace;line-height:1.7;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(123,77,255,0.16), transparent 60%),
+  radial-gradient(ellipse 60% 40% at 85% 100%, rgba(255,61,154,0.08), transparent 55%)}
+body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.5;
+  background-image:repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0, rgba(0,0,0,0.25) 1px, transparent 1px, transparent 3px);mix-blend-mode:multiply}
+.content{position:relative;z-index:3}
+
+.term-bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:12px 20px;
+  background:rgba(10,7,16,0.92);border-bottom:1px solid var(--line);backdrop-filter:blur(8px);font-size:12px;letter-spacing:0.05em}
+.dots{display:flex;gap:7px}
+.dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,0.1)}
+.dot.a{background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow)}
+.dot.b{background:var(--ember);box-shadow:0 0 8px var(--ember)}
+.dot.c{background:var(--violet);box-shadow:0 0 8px var(--violet-glow)}
+.term-title{color:var(--ash);font-size:11px}.term-title b{color:var(--violet-glow)}
+.back{margin-left:auto;color:var(--ash);text-decoration:none;font-size:11px;transition:.2s}
+.back:hover{color:var(--magenta-glow)}
+
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:0;
+  border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh}
+@media(max-width:780px){.wrap{grid-template-columns:1fr}.side{display:none}}
+
+/* sidebar */
+.side{border-right:1px solid var(--line);padding:34px 22px;position:sticky;top:46px;align-self:start;height:calc(100vh - 46px);overflow-y:auto}
+.side .brand{font-family:'Cinzel',serif;font-weight:800;font-size:22px;
+  background:linear-gradient(180deg,var(--frost),var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.side .sub{font-family:'VT323';color:var(--ash-dim);font-size:15px;margin-bottom:28px}
+.side .grp{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--magenta);margin:22px 0 10px}
+.side a{display:block;color:var(--ash);text-decoration:none;font-size:13px;padding:5px 0;transition:.2s;border-left:2px solid transparent;padding-left:10px}
+.side a:hover{color:var(--frost);border-left-color:var(--violet)}
+
+/* main */
+main{padding:46px 48px 80px}
+@media(max-width:600px){main{padding:36px 22px 60px}.term-bar{padding:12px 14px}}
+.kicker{font-family:'VT323';color:var(--magenta-glow);font-size:18px;letter-spacing:0.05em}
+h1{font-family:'Cinzel',serif;font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1.05;margin:6px 0 16px;
+  background:linear-gradient(180deg,var(--frost),var(--violet-glow) 60%,var(--magenta));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ash);font-size:16px;max-width:640px;margin-bottom:14px}
+h2{font-family:'Cinzel',serif;font-weight:600;font-size:27px;color:var(--frost);margin:50px 0 14px;
+  padding-bottom:10px;border-bottom:1px solid var(--line);scroll-margin-top:70px}
+h2 .hash{color:var(--magenta);font-family:'JetBrains Mono';font-size:18px;margin-right:8px}
+h3{font-family:'Cinzel',serif;font-size:18px;color:var(--violet-glow);margin:28px 0 8px}
+p{color:var(--ash);margin-bottom:14px}
+p b,li b{color:var(--frost)}
+a.inl{color:var(--magenta-glow);text-decoration:none;border-bottom:1px dashed rgba(255,111,181,0.4)}
+a.inl:hover{color:var(--frost)}
+ul{margin:0 0 16px 4px;list-style:none}
+li{color:var(--ash);margin-bottom:9px;padding-left:22px;position:relative}
+li::before{content:"◆";color:var(--violet);position:absolute;left:0;font-size:11px;top:4px}
+
+.code{background:#06040b;border:1px solid var(--line);padding:18px 20px;margin:8px 0 20px;
+  font-size:13px;overflow-x:auto;border-radius:2px}
+.code .c{color:var(--ash-dim)}
+.code .p{color:var(--magenta)}
+.code .k{color:var(--violet-glow)}
+.code .s{color:var(--ember)}
+.code .o{color:var(--ash)}
+.code .ok{color:var(--ember)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--magenta);background:rgba(255,61,154,0.05);
+  padding:16px 20px;margin:8px 0 22px;font-size:14px;color:var(--ash)}
+.note b{color:var(--magenta-glow)}
+
+table{width:100%;border-collapse:collapse;margin:8px 0 24px;font-size:13.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
+th{color:var(--violet-glow);font-family:'Cinzel';font-weight:600;border-bottom:1px solid var(--line)}
+td{color:var(--ash)}td b{color:var(--frost)}
+.tier{font-size:10px;letter-spacing:0.1em;padding:2px 8px;border:1px solid;text-transform:uppercase}
+.t-c{color:var(--ash-dim);border-color:var(--ash-dim)}
+.t-r{color:var(--violet-glow);border-color:var(--violet-glow)}
+.t-e{color:var(--ember);border-color:var(--ember)}
+.t-m{color:var(--magenta-glow);border-color:var(--magenta-glow)}
+
+footer{border-top:1px solid var(--line);padding:30px 48px;color:var(--ash-dim);font-size:11px;letter-spacing:0.16em;text-align:center}
+.fbrand{font-family:'Cinzel';color:var(--violet-glow);font-size:14px;letter-spacing:0.2em;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="content">
+
+  <div class="term-bar">
+    <div class="dots"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span></div>
+    <span class="term-title">ashvein@forge — <b>~/codex</b></span>
+    <a href="index.html" class="back">← back to forge</a>
+  </div>
+
+  <div class="wrap">
+    <!-- SIDEBAR -->
+    <aside class="side">
+      <div class="brand">ASHVEIN</div>
+      <div class="sub">// codex v1.0</div>
+      <div class="grp">Start</div>
+      <a href="#what">What is Ashvein</a>
+      <a href="#how">How forging works</a>
+      <a href="#quick">Quickstart</a>
+      <div class="grp">Reference</div>
+      <a href="#commands">Commands</a>
+      <a href="#rarity">Rarity tiers</a>
+      <a href="#anatomy">Relic anatomy</a>
+      <div class="grp">Build</div>
+      <a href="#skill">Bankr Skill</a>
+      <a href="#token">Token & fees</a>
+      <a href="#faq">FAQ</a>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <div class="kicker">// the codex</div>
+      <h1>Ashvein Documentation</h1>
+      <p class="lead">Ashvein is an on-chain smith. Feed it a token and it forges a unique relic — a named artifact with a rarity tier, stats, and its own myth, sealed to memory forever. This codex explains how it works and how to build on it.</p>
+
+      <h2 id="what"><span class="hash">#</span>What is Ashvein</h2>
+      <p>Ashvein is a tokenized AI agent deployed through Bankr on Base. Where most agents trade or chat, Ashvein <b>forges</b>: it takes any token as raw ore and strikes it into a one-of-a-kind relic. Each relic is generated from the token's identity and a roll of fate, so no two are ever identical.</p>
+      <p>The agent funds its own compute through its token — trading fees flow back to pay for inference, so the forge never goes cold. It is <b>non-custodial</b> and <b>immutable</b>: Ashvein never holds your assets, and every relic it strikes is logged permanently.</p>
+      <div class="note"><b>The premise:</b> nothing leaves the anvil ordinary. Dead tokens, rugs, and forgotten coins are exactly what the smith wants — it gives them an edge, a name, and a place in the armory.</div>
+
+      <h2 id="how"><span class="hash">#</span>How forging works</h2>
+      <p>Every forge runs through four stages, in order:</p>
+      <ul>
+        <li><b>Smelt</b> — the token is dropped into the crucible; Ashvein reads its on-chain history and melts away the noise.</li>
+        <li><b>Temper</b> — the metal is folded against market forces (volatility, liquidity, lineage). The number of folds is part of what decides its strength.</li>
+        <li><b>Inscribe</b> — a unique name and myth are struck into the relic. This is the part no other relic shares.</li>
+        <li><b>Quench</b> — the artifact is cooled, assigned a rarity tier, and sealed on-chain. The forge logs it to memory — eternal.</li>
+      </ul>
+
+      <h2 id="quick"><span class="hash">#</span>Quickstart</h2>
+      <p>The fastest way to forge is straight from the website terminal, or by tagging the agent on X.</p>
+      <div class="code">
+<span class="c"># on the website</span><br>
+<span class="o">1.</span> open the <span class="k">Speak to the Smith</span> panel<br>
+<span class="o">2.</span> type a token — <span class="s">$EMBER</span>, <span class="s">PEPE</span>, or your own coin<br>
+<span class="o">3.</span> press <span class="k">Forge</span> → a relic is struck<br><br>
+<span class="c"># on X</span><br>
+<span class="p">@ashveinai</span> forge <span class="s">$EMBER</span> into a relic
+      </div>
+      <div class="note">No wallet connection is needed just to forge a relic preview. Sealing a relic on-chain happens through your connected Bankr wallet.</div>
+
+      <h2 id="commands"><span class="hash">#</span>Commands</h2>
+      <p>Ashvein understands natural language, but these phrasings are the most reliable:</p>
+      <table>
+        <tr><th>Command</th><th>What it does</th></tr>
+        <tr><td><b>forge [token]</b></td><td>Strikes a new relic from the named token.</td></tr>
+        <tr><td><b>appraise [relic]</b></td><td>Returns the lore, rarity, and stats of an existing relic.</td></tr>
+        <tr><td><b>reforge [relic]</b></td><td>Melts a relic back down and strikes a new one (the old myth is lost).</td></tr>
+        <tr><td><b>armory</b></td><td>Lists relics you have forged.</td></tr>
+        <tr><td><b>codex [tier]</b></td><td>Explains a rarity tier and its drop odds.</td></tr>
+      </table>
+
+      <h2 id="rarity"><span class="hash">#</span>Rarity tiers</h2>
+      <p>Every relic rolls a tier when it is quenched. Rarer relics carry higher edge and lower supply.</p>
+      <table>
+        <tr><th>Tier</th><th>Odds</th><th>Edge</th><th>Supply</th></tr>
+        <tr><td><span class="tier t-c">common</span></td><td>50%</td><td>+5 – 30</td><td><b>∞</b></td></tr>
+        <tr><td><span class="tier t-r">rare</span></td><td>30%</td><td>+30 – 90</td><td><b>250 – 1500</b></td></tr>
+        <tr><td><span class="tier t-e">epic</span></td><td>14%</td><td>+90 – 250</td><td><b>50 – 250</b></td></tr>
+        <tr><td><span class="tier t-m">mythic</span></td><td>6%</td><td>+400 – 999</td><td><b>1</b></td></tr>
+      </table>
+      <div class="note"><b>Mythic</b> relics are unique — supply of one, forever. The forge will not strike its like again.</div>
+
+      <h2 id="anatomy"><span class="hash">#</span>Relic anatomy</h2>
+      <p>Each forged relic carries:</p>
+      <ul>
+        <li><b>Name</b> — a generated title (prefix + form + epithet), e.g. <i>Lamentblade of the Hollow Pump</i>.</li>
+        <li><b>Glyph</b> — a sigil that marks the relic's line.</li>
+        <li><b>Rarity</b> — its tier, rolled at quench.</li>
+        <li><b>Edge</b> — a power stat scaled to rarity.</li>
+        <li><b>Supply</b> — how many of this relic can ever exist.</li>
+        <li><b>Forge ID</b> — a permanent identifier in the armory ledger.</li>
+        <li><b>Myth</b> — a one-line origin story naming the source token.</li>
+      </ul>
+
+      <h2 id="skill"><span class="hash">#</span>Bankr Skill</h2>
+      <p>Ashvein is built as a Bankr Skill, so other agents and builders can call the forge. Browse and install skills from the registry:</p>
+      <div class="code">
+<span class="c"># install via the Bankr skills registry</span><br>
+<span class="p">→</span> <a class="inl" href="https://skills.bankr.bot/">https://skills.bankr.bot/</a><br><br>
+<span class="c"># example call</span><br>
+<span class="k">ashvein.forge</span>({ token: <span class="s">"$EMBER"</span>, folds: <span class="s">3</span> })<br>
+<span class="o">↳ returns relic { name, rarity, edge, supply, glyph, myth }</span> <span class="ok">✓</span>
+      </div>
+      <p>Because Bankr skills auto-compound, any improvement to the forge becomes available to every agent that installs it.</p>
+
+      <h2 id="token"><span class="hash">#</span>Token & fees</h2>
+      <p>Ashvein runs on its own token launched through Bankr on Base. A small fee on each swap flows back to the agent to pay for its own inference, so the forge is self-sustaining with no ongoing cost to the builder.</p>
+      <ul>
+        <li>Fees accrue automatically — no staking, no lockups.</li>
+        <li>A share of trading fees subsidizes the agent's LLM calls through the Bankr LLM Gateway.</li>
+        <li>The rest rewards the wallet that launched the agent.</li>
+      </ul>
+      <div class="note">This page is documentation, not financial advice. Tokens are volatile and you can lose money — do your own research before trading anything.</div>
+
+      <h2 id="faq"><span class="hash">#</span>FAQ</h2>
+      <h3>Does Ashvein hold my tokens?</h3>
+      <p>No. The forge is non-custodial — it reads token data and strikes relics, but never takes custody of your assets.</p>
+      <h3>Can I forge any token?</h3>
+      <p>Yes. Even dead or rugged tokens — those are the smith's favorite ore.</p>
+      <h3>Are relics random?</h3>
+      <p>The name and myth are generated from the token plus a roll of fate, and the rarity tier is a weighted roll. So results vary every time, even for the same token.</p>
+      <h3>What makes a mythic relic special?</h3>
+      <p>Supply of exactly one. Once struck, the forge never repeats it.</p>
+    </main>
+  </div>
+
+  <footer>
+    <div class="fbrand">ASHVEIN</div>
+    © 2026 ASHVEIN FORGE — NON-CUSTODIAL — IMMUTABLE — ETERNAL
+  </footer>
+
+</div>
+</body>
+</html>
